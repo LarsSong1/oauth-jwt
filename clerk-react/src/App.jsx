@@ -1,8 +1,10 @@
-import { SignedIn, SignedOut, useUser, useSession } from '@clerk/clerk-react';
-import Home from './components/Home';
+import { useUser, useSession } from '@clerk/clerk-react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import Home from './pages/Home';
 import Login from './components/Login';
 import { useEffect } from 'react';
 import axios from 'axios'
+import Register from './pages/Register';
 
 export default function App() {
   const { isLoaded, user } = useUser()
@@ -12,6 +14,7 @@ export default function App() {
 
   useEffect(() => {
     if (!isLoaded || !user) return;
+
     axios.post(
       `${backendUrl}/api/auth/clerk`,
       {
@@ -27,16 +30,11 @@ export default function App() {
 
 
   return (
-    <header>
-      <SignedOut>
-        <Login />
-      </SignedOut>
-
-
-
-      <SignedIn>
-        <Home />
-      </SignedIn>
-    </header>
+    <Router>
+      <Routes>
+        <Route path='/' element={<Home/>} />
+        <Route path='/register' element={<Register/>} />
+      </Routes>
+    </Router>
   );
 }
