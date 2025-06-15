@@ -1,12 +1,35 @@
-import { SignedIn, SignedOut, SignInButton, UserButton } from '@clerk/clerk-react';
+import { SignedIn, SignedOut, useUser, useSession } from '@clerk/clerk-react';
 import Home from './components/Home';
 import Login from './components/Login';
+import { useEffect } from 'react';
+import axios from 'axios'
 
 export default function App() {
+  const { isLoaded, user } = useUser()
+  const { session } = useSession()
+  const backendUrl = import.meta.env.VITE_BACKEND_URL;
+  console.log("API en:", backendUrl);
+
+  useEffect(() => {
+    if (!isLoaded || !user) return;
+    axios.post(
+      `${backendUrl}/api/auth/clerk`,
+      {
+        clerkUserId: user.id,
+        email:       user.primaryEmailAddress?.emailAddress,
+        name:        user.fullName,
+      },
+      { headers: { "Content-Type": "application/json" } }
+    )
+    .then(({ data }) => console.log("Sync OK:", data))
+    .catch(err => console.error("Sync error:", err));
+  }, [isLoaded, user, session, backendUrl]);
+
+
   return (
     <header>
       <SignedOut>
-        <Login/>
+        <Login />
       </SignedOut>
 
 
