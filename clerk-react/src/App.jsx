@@ -1,7 +1,6 @@
 import { useUser, useSession } from '@clerk/clerk-react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import Home from './pages/Home';
-import Login from './components/Login';
 import { useEffect } from 'react';
 import axios from 'axios'
 import Register from './pages/Register';
@@ -32,8 +31,9 @@ export default function App() {
   return (
     <Router>
       <Routes>
-        <Route path='/' element={<Home/>} />
+        <Route path='/' element={<Home />} />
         <Route path='/register' element={<Register/>} />
+        
       </Routes>
     </Router>
   );

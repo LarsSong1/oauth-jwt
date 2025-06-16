@@ -4,8 +4,7 @@ import connectDB from './db.js'
 import cors from 'cors'
 import AuthRoutes from './src/routes/auth.js'
 
-
-
+dotenv.config();
 
 const PORT = process.env.PORT || 3000
 const app = express()

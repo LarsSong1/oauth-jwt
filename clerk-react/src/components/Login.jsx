@@ -6,7 +6,7 @@ const Login = () => {
     <section className="min-h-screen flex items-center justify-center px-4">
       <div className=" rounded-lg p-8 max-w-md w-full text-center">
         <div className='flex justify-center'>
-            <SignIn routing='path' path="/" signUpUrl="/register"/>
+            <SignIn signUpUrl="/register"/>
         </div>
       </div>
 
